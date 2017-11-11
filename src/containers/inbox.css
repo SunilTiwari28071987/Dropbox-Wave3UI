@@ -1,0 +1,21 @@
+.navbar {
+    background: #FFFFFF;
+    height: 100%; /* 100% Full-height */
+    width: 100%;
+}
+.footer-bottom {
+    background: #FFFFFF;
+    border-top: 1px solid #FFFFFF;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.footer-bottom p.pull-left {
+    padding-top: 6px;
+}
+.content table {
+    table-layout: auto !important;
+}
+
+.content th, .content td, .content thead th, .content tbody td, .content tfoot td, .content tfoot th {
+    width: auto !important;
+}
