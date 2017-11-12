@@ -1,7 +1,7 @@
 import * as Actions from "./actions";
 import store from '../store/store'
 
-import {uploadFile,createFolder,createSharedFolder,setFilePath} from '../api/api'
+import {uploadFile,createFolder,createSharedFolder,setFilePath, deleteFile} from '../api/api'
 import {getUserHomePath, getUserEmail} from "../reducers/rootreducer";
 
 
@@ -66,4 +66,9 @@ export const creatingNewSharedFolder = ( state,folderName, event) => {
 export const signingIn = (firstName, lastName, email, age, gender, password, files) => {
     console.log("signing in......")
     store.dispatch(Actions.signIn(firstName,lastName,email, age, gender, password, files,[]))
+}
+
+export const deleting = (filePath) => {
+    console.log("signing in......")
+    store.dispatch(Actions.deleteFileFolder(filePath))
 }
