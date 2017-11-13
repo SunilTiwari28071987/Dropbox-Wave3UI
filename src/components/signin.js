@@ -48,7 +48,7 @@ class SignIn extends Component {
                     console.log("reading response from node..")
 
                     console.log(response)
-                    API.setFilePath({filePath:'./public/uploads'}).then((response) => {
+                    /*API.setFilePath({filePath:'./public/uploads'}).then((response) => {
                         if (response.status === 200) {
                             console.log(response.result);
                         }
@@ -57,9 +57,9 @@ class SignIn extends Component {
                             //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
                             Error.errorAlert("Sorry, Your Sign In has failed...!!!!");
                         }});
-
-                    console.log(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender, response.data.password, response.data.files);
-                    UserActions.signingIn(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender,response.data.password, response.data.files );
+                    */
+                    console.log(response.firstName,response.lastName,response.emailID,response.age,response.gender, response.password, response.files);
+                    UserActions.signingIn(response.firstName,response.lastName,response.emailID,response.age,response.gender,response.password, response.files );
                 }
                 else if (response.status === 400 || response.status === 500) {
 
