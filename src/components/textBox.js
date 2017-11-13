@@ -10,12 +10,13 @@ class TextBox extends Component {
             <div>
 
                 <form onSubmit={e => {
-                    e.preventDefault()
+
+                    e.preventDefault();
                     if (!input.value.trim()) {
                         return
                     }
-                    this.props.creatingFolder(input.value)
-                    this.props.onClick()
+                    //this.props.creatingFolder(input.value)
+                    this.props.onClick(input.value);
                     input.value = ''
                 }}>
                     <input ref={node => {

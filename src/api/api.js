@@ -109,20 +109,9 @@ export const createSharedFolder = (payload) =>
         });
 
 
+
 export const download = (payload) =>
-    fetch(`${api}/download/${payload.fileName}`
-    ).then(res => {
-        console.log(res);
-        return res;
-    })
-        .catch(error => {
-            console.log("This is error");
-            return error;
-        });
-
-
-export const checkSession = (payload) =>
-    fetch(`${api}/checksession`, {
+    fetch(`${api}/download/${payload.fileName}`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -141,8 +130,8 @@ export const checkSession = (payload) =>
     });
 
 
-export const signOut = (payload) =>
-    fetch(`${api}/signout`, {
+export const deleteFile = (payload) =>
+    fetch(`${api}/delete`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -151,6 +140,113 @@ export const signOut = (payload) =>
         credentials:'include',
         body: JSON.stringify(payload)
     }).then(res => {
+        console.log(res);
+        return res.json();
+
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+
+
+export const checkSession = (payload) =>
+    fetch(`${api}/checksession`, {
+
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials:'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+
+        console.log("Got result")
+        //console.log(res.json());
+        return res.json();
+    }).catch(error => {
+        console.log("This is error api");
+        console.log(error);
+        return error;
+    });
+
+
+export const signOut = (payload) =>
+    fetch(`${api}/signout`, {
+
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials:'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+
+        console.log("Got result")
+        //console.log(res.json());
+        return res.json();
+    }).catch(error => {
+        console.log("This is error api");
+        console.log(error);
+        return error;
+    });
+
+
+
+    export const shareFile = (payload) =>
+    fetch(`${api}/share`, {
+
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials:'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+
+        console.log("Got result")
+        //console.log(res.json());
+        return res.json();
+    }).catch(error => {
+        console.log("This is error api");
+        console.log(error);
+        return error;
+    });
+
+export const starFile = (payload) =>
+    fetch(`${api}/star`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials:'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+export const unstarFile = (payload) =>
+    fetch(`${api}/unstar`, {
+
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials:'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+
         console.log("Got result")
         //console.log(res.json());
         return res.json();
