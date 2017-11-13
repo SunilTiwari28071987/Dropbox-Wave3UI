@@ -15,6 +15,7 @@ import {browserHistory} from  'react-router'
 class Inbox extends Component {
 
 
+
 /*
     componentWillMount() {
         console.log(this.props.emailID)
@@ -55,6 +56,7 @@ class Inbox extends Component {
             });
     };
 
+
     render() {
 
         return (
@@ -86,6 +88,7 @@ class Inbox extends Component {
                                                         id="logout"
                                                         value="logout"
                                                         onClick={() => this.signOutAction(this.props.emailID)}>
+
                                                     Sign out
                                                 </button>
                                             </div>
@@ -156,7 +159,6 @@ class Inbox extends Component {
 
 
 
-
 const mapStateToProps = (state) => ({
     userName: state.UserDetailsReducer.userProfile.firstName+" "+state.UserDetailsReducer.userProfile.lastName,
     emailID : state.UserDetailsReducer.userProfile.email
@@ -170,3 +172,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps) (Inbox));
+

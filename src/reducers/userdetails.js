@@ -6,14 +6,15 @@ function userProfile(state = {}, action){
 
     switch (action.type) {
         case Actions.SIGN_IN :
-            return  {
-                    firstName: action.firstName,
+
+            return  {firstName: action.firstName,
                     lastName: action.lastName,
                     email:action.email,
                     age: action.age,
                     gender:action.gender,
                     password:action.password
             }
+
 
         case Actions.SIGN_OUT :
             return  {

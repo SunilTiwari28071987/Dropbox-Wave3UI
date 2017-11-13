@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import SignUp from './signup';
 import SignIn from './signin';
 import './home.css';
+
 import * as API from '../api/api'
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
+
 //import ModalBox from '../components/modal'
 
 
@@ -19,7 +21,6 @@ class Home extends Component {
         }
 
     }
-
 
 
     componentWillMount() {
@@ -174,6 +175,7 @@ class Home extends Component {
     }
 }
 
+
 const mapStateToProps = (state) => ({
     emailID : state.UserDetailsReducer.userProfile.email
 })
@@ -181,4 +183,4 @@ const mapStateToProps = (state) => ({
 
 export default withRouter(connect(mapStateToProps,null)(Home));
 
-//export default Home;
+

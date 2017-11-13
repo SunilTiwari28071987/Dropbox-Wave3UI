@@ -1,13 +1,20 @@
 import React, {Component} from 'react'
+
 import * as API from '../api/api';
 import {connect} from 'react-redux'
+import { withRouter } from 'react-router-dom';
+
 import * as Actions from '../actions/actions'
 import FileItemList from '../components/fileItemList'
 import * as  FileActions from '../actions/fileActions'
 import * as  UserActions from '../actions/userActions'
+
 import ShareModalBox from '../components/generic/sharedModal'
 import store from '../store/store'
 import TextBox from "../components/textBox";
+
+
+
 
 
 class fileItem extends Component {
@@ -15,7 +22,8 @@ class fileItem extends Component {
 
     constructor(props) {
         super();
-        this.state = {isShareClicked: false}
+        this.state = {isShareClicked: false
+        }
     }
 
     timeConverter(timestamp) {
@@ -33,15 +41,60 @@ class fileItem extends Component {
 
 
 
-    downloadAction = (filename)=>{
-        console.log("File Name",filename);
 
-        if(filename!==""){
-            var file ={fileName:filename};
+    downloadAction = (filename)=> {
+        console.log("File Name", filename);
+
+        if (filename !== "") {
+            var file = {fileName: filename};
             this.handleDownload(file);
         }
-
     }
+
+    deleteAction = (file)=>{
+
+        console.log('delete :',JSON.stringify(file));
+        var fileJson = {
+            filePath: file.filePath,
+            emailID: this.props.emailID
+        };
+        this.handleDelete(fileJson);
+    }
+
+
+
+    handleDelete = (fileJson) => {
+        console.log('handleDelete');
+
+        API.deleteFile(fileJson )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.result);
+                    console.log("reading response from node..")
+                    console.log(response)
+                    //console.log(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender, response.data.password, response.data.files);
+
+                } else if (response.status === 400 || response.status === 500) {
+                    console.log(response.result);
+                    //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
+                    //Error.errorAlert("Sorry, delete failed...!!!!");
+                }
+            });
+    };
+
+
+    shareAction = (file, shareToEmail)=>{
+
+
+        var fileJson = {
+            file: file,
+            fromEmailID: this.props.emailID,
+            toEmailID: shareToEmail
+        };
+        console.log('sharing :',JSON.stringify(fileJson));
+        this.handleShare(fileJson);
+    }
+
 
 
 
@@ -61,10 +114,96 @@ class fileItem extends Component {
 
     renderSharedModal() {
         return <ShareModalBox modalState={this.state.isShareClicked}
-                              sharingFolder={(filePath) => this.props.onShareClick(filePath)}
-
-                                     onClick={() => this.setState({isShareClicked: false})}/>
+                              sharingFolder={(emailID) => {
+                                  this.props.onShareClick(this.props.file.filePath);
+                                  this.shareAction(this.props.file, emailID);
+                              }}
+                              onClick={() => this.setState({isShareClicked: false})}/>
     }
+
+
+    handleShare = (fileJson) => {
+        console.log('handleShare');
+
+        API.shareFile(fileJson )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.result);
+                    console.log("reading response from node..")
+                    console.log(response)
+                    //console.log(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender, response.data.password, response.data.files);
+
+                } else if (response.status === 400 || response.status === 500) {
+                    console.log(response.result);
+                    //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
+                    //Error.errorAlert("Sorry, delete failed...!!!!");
+                }
+            });
+    };
+
+    starAction = (file)=>{
+
+
+        var fileJson = {
+            filePath: file.filePath,
+            emailID: this.props.emailID
+        };
+        console.log('starring :',JSON.stringify(fileJson));
+        this.handleStar(fileJson);
+    }
+
+
+
+    handleStar = (fileJson) => {
+        console.log('handleStar');
+
+        API.starFile(fileJson )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.result);
+                    console.log("reading response from node..")
+                    console.log(response)
+                    //console.log(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender, response.data.password, response.data.files);
+
+                } else if (response.status === 400 || response.status === 500) {
+                    console.log(response.result);
+                    //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
+                    //Error.errorAlert("Sorry, delete failed...!!!!");
+                }
+            });
+    };
+
+    unstarAction = (file)=>{
+
+
+        var fileJson = {
+            filePath: file.filePath,
+            emailID: this.props.emailID
+        };
+        console.log('starring :',JSON.stringify(fileJson));
+        this.handleUnstar(fileJson);
+    }
+
+
+
+    handleUnstar = (fileJson) => {
+        console.log('handleUnstar');
+
+        API.unstarFile(fileJson )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.result);
+                    console.log("reading response from node..")
+                    console.log(response)
+                    //console.log(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender, response.data.password, response.data.files);
+
+                } else if (response.status === 400 || response.status === 500) {
+                    console.log(response.result);
+                    //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
+                    //Error.errorAlert("Sorry, delete failed...!!!!");
+                }
+            });
+    };
 
     render() {
         return ( this.props.file.isDeleted ?
@@ -74,8 +213,21 @@ class fileItem extends Component {
                     <td className="col-sm-2">
 
                         <a className="col-sm-1" href="#"
-                           onClick={this.props.file.isStared ? this.props.onUnstarClick : this.props.onStarClick}>
-                            {this.props.file.isStared ? <div>&#9733;</div> : <div>&#9734;</div>}
+
+                           onClick={()=>{
+                               if(this.props.file.isStared)
+                               {
+                                   this.props.onUnstarClick();
+                                   this.unstarAction(this.props.file);
+                               }
+                               else
+                                {
+                                   this.props.onStarClick();
+                                   this.starAction(this.props.file);
+
+                                }
+                           }}>
+                         {this.props.file.isStared ? <div>&#9733;</div> : <div>&#9734;</div>}
                         </a>
 
 
@@ -85,10 +237,11 @@ class fileItem extends Component {
                                 "images/file.png"}/>
 
                         <b className="col-sm-2">
-                            <a href={this.props.file.isFolder ? "#" : "http://localhost:5000/download/"+this.props.file.filePath}
-                               onClick={this.props.file.isFolder ? this.props.onOpenClick : null} target="_blank">
+                            <a href={this.props.file.isFolder ? "#" : "http://localhost:5000/download/"+this.props.file.fileName}
+                               onClick={this.props.file.isFolder ? this.props.onOpenClick : null} target="_self">
                                 {this.props.file.fileName}
                             </a>
+
 
                         </b>
                     </td>
@@ -108,36 +261,14 @@ class fileItem extends Component {
                     </td>
 
                     <td className="col-sm-6">
-                        <div className="col-sm-4">
-                            {this.props.file.isFolder ? null :
-                                <button type="button"
-                                        className="form-control btn  btn-success"
-                                        name="download"
-                                        id="download"
-                                        value="download"
-                                        onClick={() => {this.downloadAction(this.props.file.filePath)}}>
-                                    Download
-                                </button>
-                            }
-                        </div>
-
-
-                        {this.state.isShareClicked ? this.renderSharedModal(): null}
-                        {this.state.isShareClicked ?
-                            <TextBox isShareClicked={this.state.isShareClicked}
-                                     creatingFolder={(filePath) => this.props.onShareClick(filePath)}
-                                     onClick={() => this.setState({isShareClicked: false})}/>
-
-
-                            : null}
-
+                        {this.state.isShareClicked?this.renderSharedModal():null}
 
                         <div className="col-sm-4">
                             <button className=" form-control btn btn-info" type="button"
                                     name="share"
                                     id="share"
                                     value="share"
-                                    onClick={() => this.setState({isShareClicked: true})}>
+                                    onClick={() => {this.setState({isShareClicked: true});}}>
 
                                 Share
                             </button>
@@ -149,7 +280,7 @@ class fileItem extends Component {
                                     name="delete"
                                     id="delete"
                                     value="delete"
-                                    onClick={this.props.onDeleteClick}>
+                                    onClick={()=>{this.deleteAction(this.props.file); this.props.onDeleteClick();}}>
                                 Delete
                             </button>
                         </div>
@@ -163,112 +294,10 @@ class fileItem extends Component {
 }
 
 
-
-/*
-const fileItem = ({ file,
-                      onOpenClick,
-                      onDownloadClick,
-                      onStarClick,
-                      onUnstarClick,
-                      onShareClick,
-                      onShareLinkClick,
-                      onDeleteClick
-                  }) => (
-   file.isDeleted ?
-               null :
-
-           <tr  className="row">
-               <td className="col-sm-5">
-
-                       <a className="col-sm-1" href="#" onClick={file.isStared ? onUnstarClick : onStarClick}>
-                           {file.isStared ? <div>&#9733;</div> : <div>&#9734;</div>}
-                       </a>
+const mapStateToProps = (state) => ({
+    emailID: state.UserDetailsReducer.userProfile.email
+})
 
 
-                   <img className="col-sm-4" src={
-                       file.isFolder ?
-                           (file.isShared?"images/shared_folder.png":"images/folder.png"):
-                           "images/file.png"}/>
+export default withRouter(connect(mapStateToProps,null) (fileItem));
 
-                   <b className="col-sm-6">
-                       <a href={file.isFolder ? "#" :file.filePath}
-                          onClick={file.isFolder ? onOpenClick : null}>
-                           {file.fileName}
-                       </a>
-                   </b>
-               </td>
-
-               <td className="col-sm-2">
-                   <p>
-                       {file.lastModified}
-                   </p>
-               </td>
-
-            <td className="col-sm-2">
-                <p>
-                    {file.memberCount==1 ? "Only You" : file.memberCount}
-                </p>
-            </td>
-
-
-
-
-               <td className="col-sm-3">
-                   {file.isFolder ? null :
-                       <button type="button"
-                               className="col-sm-3 form-control btn btn-primary"
-                               name="download"
-                               id="download"
-                               value="download"
-                               onClick={()=>window.open(file.filePath)}>
-                           Download
-                       </button>
-                       }
-
-
-                         <button  className="form-control btn btn-primary" type="button"
-                                  name="share"
-                            id="share"
-                            value="share"
-                            onClick={onShareClick}>
-                        Share
-                        </button>
-
-                      <button type="button"
-                               className=" form-control btn btn-primary"
-                               name="shareLink"
-                               id="shareLink"
-                               value="shareLink"
-                               onClick={() => window.alert(file.filePath)}>
-                           Share Link
-                       </button>
-
-
-                 <button type="button"
-                  className="col-sm-3 form-control btn btn-primary"
-                  name="delete"
-                  id="delete"
-                  value="delete"
-                  onClick={onDeleteClick}>
-              Delete
-          </button>
-
-           </td>
-           </tr>
-
-);
-
-
- <div className="col-sm-3">
-                            <button type="button"
-                                    className=" form-control btn btn-primary"
-                                    name="shareLink"
-                                    id="shareLink"
-                                    value="shareLink"
-                                    onClick={() => window.alert(this.props.file.filePath)}>
-                                Share Link
-                            </button>
-                        </div>
-
-*/
-export default fileItem

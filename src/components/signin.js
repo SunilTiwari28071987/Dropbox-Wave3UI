@@ -46,10 +46,23 @@ class SignIn extends Component {
                     Success.successAlert("You have successfully Signed In...!!!!");
                     this.props.history.push("/inbox");
                     console.log("reading response from node..")
-                    console.log("Response in Front End",response)
+
+                    console.log(response)
+                    API.setFilePath({filePath:'./public/uploads'}).then((response) => {
+                        if (response.status === 200) {
+                            console.log(response.result);
+                        }
+                        else if (response.status === 400 || response.status === 500) {
+                            console.log(response.result);
+                            //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
+                            Error.errorAlert("Sorry, Your Sign In has failed...!!!!");
+                        }});
+
                     console.log(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender, response.data.password, response.data.files);
                     UserActions.signingIn(response.data.firstName,response.data.lastName,response.data.emailID,response.data.age,response.data.gender,response.data.password, response.data.files );
-                } else if (response.status === 400 || response.status === 500) {
+                }
+                else if (response.status === 400 || response.status === 500) {
+
                     console.log(response.result);
                     //this.renderDialogBox("Sorry, Your Sign In has failed...!!!!");
                     Error.errorAlert("Sorry, Your Sign In has failed...!!!!");

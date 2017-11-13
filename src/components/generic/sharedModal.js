@@ -19,7 +19,7 @@ class ModalBox extends React.Component {
         console.log("Inside Modal dialog box",props);
         this.state = {
             modalIsOpen: props.modalState,
-            userName:""
+            emailID:""
         };
 
         //https://github.com/reactjs/react-modal
@@ -33,10 +33,12 @@ class ModalBox extends React.Component {
         this.setState({modalIsOpen: true});
     }
 
-    submitModal(username) {
-        console.log("Inside submit modal function",username);
+
+    submitModal(emailID) {
+        console.log("Inside submit modal function",emailID);
         console.log(this.state);
-        username ? this.props.sharingFolder(username) : null;
+        emailID ? this.props.sharingFolder(emailID) : null;
+
         this.props.onClick();
         this.closeModal();
     }
@@ -69,10 +71,11 @@ class ModalBox extends React.Component {
                                                 <label className="col-sm-5 col-md-5 col-lg-5">User Name </label>
                                                 <div className="col-sm-7 col-md-7 col-lg-7">
                                                     <input type="text" className="form-control" name="folderNmae" required="true"
-                                                           id="folderName" placeholder="Enter Username" value={this.state.userName}
+                                                           id="folderName" placeholder="Enter Email" value={this.state.emailID}
                                                            onChange={(event) => {
                                                                this.setState({
-                                                                   userName: event.target.value
+                                                                   emailID: event.target.value
+
                                                                });
                                                            }}/>
                                                 </div>
@@ -80,7 +83,8 @@ class ModalBox extends React.Component {
                                             <div className="form-group">
                                                 <div className="row">
                                                     <div className="col-sm-offset-2 col-sm-2">
-                                                        <button type="button" className="btn btn-primary" onClick={()=> {this.submitModal(this.state.userName)}}>OK</button>
+
+                                                        <button type="button" className="btn btn-primary" onClick={()=> {this.submitModal(this.state.emailID)}}>OK</button>
                                                     </div>
                                                     <div className=" col-sm-offset-2  col-sm-2">
                                                         <button type="button" className="btn btn-primary" onClick={this.closeModal}>Cancel</button>
