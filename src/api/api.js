@@ -1,11 +1,11 @@
-const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:5000'
+const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:8080'
 
 const headers = {
     'Accept': 'application/json'
 };
 
 export const signUp = (payload) =>
-    fetch(`${api}/signup`, {
+    fetch(`${api}/user/signup`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -13,10 +13,7 @@ export const signUp = (payload) =>
         },
         credentials:'include',
         body: JSON.stringify(payload)
-    }).then(res => {
-        console.log(res);
-        return res.json();
-    })
+    }).then((res => res.json()))
         .catch(error => {
             console.log("This is error");
             return error;
@@ -24,7 +21,7 @@ export const signUp = (payload) =>
 
 
 export const signIn = (payload) =>
-    fetch(`${api}/signin`, {
+    fetch(`${api}/user/signin`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -33,7 +30,7 @@ export const signIn = (payload) =>
         credentials:'include',
         body: JSON.stringify(payload)
     }).then(res => {
-        console.log("Got result")
+        //console.log("Got result")
         //console.log(res.json());
         return res.json();
     }).catch(error => {
@@ -44,7 +41,7 @@ export const signIn = (payload) =>
 
 
 export const uploadFile = (payload) =>
-    fetch(`${api}/upload`, {
+    fetch(`${api}/file/upload`, {
         method: 'POST',
         credentials:'include',
         body: payload
@@ -131,7 +128,7 @@ export const download = (payload) =>
 
 
 export const deleteFile = (payload) =>
-    fetch(`${api}/delete`, {
+    fetch(`${api}/file/delete`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -197,8 +194,7 @@ export const signOut = (payload) =>
 
 
     export const shareFile = (payload) =>
-    fetch(`${api}/share`, {
-
+    fetch(`${api}/file/share`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -206,19 +202,16 @@ export const signOut = (payload) =>
         },
         credentials:'include',
         body: JSON.stringify(payload)
-    }).then(res => {
-
-        console.log("Got result")
-        //console.log(res.json());
-        return res.json();
-    }).catch(error => {
+    }).then(res =>
+        res.json())
+        .catch(error => {
         console.log("This is error api");
         console.log(error);
         return error;
     });
 
 export const starFile = (payload) =>
-    fetch(`${api}/star`, {
+    fetch(`${api}/file/star`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -236,7 +229,7 @@ export const starFile = (payload) =>
         });
 
 export const unstarFile = (payload) =>
-    fetch(`${api}/unstar`, {
+    fetch(`${api}/file/unstar`, {
 
         method: 'POST',
         headers: {

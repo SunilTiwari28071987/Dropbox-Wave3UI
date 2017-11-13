@@ -11,6 +11,7 @@ import * as  UserActions from '../actions/userActions'
 
 import ShareModalBox from '../components/generic/sharedModal'
 import store from '../store/store'
+
 import TextBox from "../components/textBox";
 
 
@@ -83,15 +84,16 @@ class fileItem extends Component {
     };
 
 
-    shareAction = (file, shareToEmail)=>{
+    shareAction = (filePath, shareToEmail)=>{
 
 
-        var fileJson = {
-            file: file,
+        var  fileJson = {
+            filePath: filePath,
             fromEmailID: this.props.emailID,
             toEmailID: shareToEmail
         };
-        console.log('sharing :',JSON.stringify(fileJson));
+
+        console.log('sharing :',fileJson);
         this.handleShare(fileJson);
     }
 
@@ -114,16 +116,18 @@ class fileItem extends Component {
 
     renderSharedModal() {
         return <ShareModalBox modalState={this.state.isShareClicked}
+
                               sharingFolder={(emailID) => {
                                   this.props.onShareClick(this.props.file.filePath);
-                                  this.shareAction(this.props.file, emailID);
+                                  this.shareAction(this.props.file.filePath, emailID);
                               }}
                               onClick={() => this.setState({isShareClicked: false})}/>
+
     }
 
 
     handleShare = (fileJson) => {
-        console.log('handleShare');
+        console.log('handleShare : '+JSON.stringify(fileJson));
 
         API.shareFile(fileJson )
             .then((response) => {
@@ -237,8 +241,10 @@ class fileItem extends Component {
                                 "images/file.png"}/>
 
                         <b className="col-sm-2">
+
                             <a href={this.props.file.isFolder ? "#" : "http://localhost:5000/download/"+this.props.file.fileName}
                                onClick={this.props.file.isFolder ? this.props.onOpenClick : null} target="_self">
+
                                 {this.props.file.fileName}
                             </a>
 
@@ -261,7 +267,9 @@ class fileItem extends Component {
                     </td>
 
                     <td className="col-sm-6">
+
                         {this.state.isShareClicked?this.renderSharedModal():null}
+
 
                         <div className="col-sm-4">
                             <button className=" form-control btn btn-info" type="button"

@@ -19,6 +19,7 @@ class ModalBox extends React.Component {
         console.log("Inside Modal dialog box",props);
         this.state = {
             modalIsOpen: props.modalState,
+
             emailID:""
         };
 
@@ -34,11 +35,11 @@ class ModalBox extends React.Component {
     }
 
 
+
     submitModal(emailID) {
         console.log("Inside submit modal function",emailID);
         console.log(this.state);
         emailID ? this.props.sharingFolder(emailID) : null;
-
         this.props.onClick();
         this.closeModal();
     }
@@ -74,6 +75,7 @@ class ModalBox extends React.Component {
                                                            id="folderName" placeholder="Enter Email" value={this.state.emailID}
                                                            onChange={(event) => {
                                                                this.setState({
+
                                                                    emailID: event.target.value
 
                                                                });
@@ -84,7 +86,9 @@ class ModalBox extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-offset-2 col-sm-2">
 
+
                                                         <button type="button" className="btn btn-primary" onClick={()=> {this.submitModal(this.state.emailID)}}>OK</button>
+
                                                     </div>
                                                     <div className=" col-sm-offset-2  col-sm-2">
                                                         <button type="button" className="btn btn-primary" onClick={this.closeModal}>Cancel</button>

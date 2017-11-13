@@ -6,22 +6,19 @@ import {uploadFile,createFolder,createSharedFolder,setFilePath, deleteFile} from
 import {getUserHomePath, getUserEmail} from "../reducers/rootreducer";
 
 
-export const uploadingFile = ( email, event) => {
-    let filePath = './public/uploads'
+export const uploadingFile = ( emailID, event) => {
+    let filePath = './resources/upload'
     let fileName = event.target.files[0].name;
     const filePath1 = {filePath :filePath};
-    setFilePath(filePath1)
-        .then((status) => {
-            console.log("Got the response");
-        });
+
     console.log("FilePathSet :",filePath);
     console.log("FilePathSet :",filePath);
     console.log("FileUpload");
     console.log(event.target.files[0])
     const payload = new FormData();
-    payload.append('mypic', event.target.files[0]);
-    console.log(email);
-    payload.append('email',email);
+    payload.append('file', event.target.files[0]);
+    console.log(emailID);
+    payload.append('emailID',emailID);
     payload.append('fileName',fileName);
     payload.append('filePath',filePath+"/"+fileName);
     uploadFile(payload)

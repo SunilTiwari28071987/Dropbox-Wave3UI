@@ -54,22 +54,23 @@ class SignUp extends Component {
                 //console.log(response.result);
                 //Success.successAlert("You have successfully Signed Up...!!!!");
                 if (response.status === 200) {
-                    console.log(response.result);
+
                     //this.renderDialogBox("You have successfully Signed Up...!!!!");
                     Success.successAlert("You have successfully Signed Up...!!!!");
 
                 } else if (response.status === 400) {
-                    console.log(response.result);
-                    this.renderDialogBox("Sorry, Your Sign Up has failed...!!!!");
+
+                    //this.renderDialogBox("Sorry, Your Sign Up has failed...!!!!");
                     Error.errorAlert("Sorry, Your Sign Up has failed...!!!!");
                 }
             });
-        let filePath = getUserHomePath(store.getState().UserDetailsReducer)
+        /*let filePath = getUserHomePath(store.getState().UserDetailsReducer)
         const filePath1 = {filePath :filePath};
         API.setFilePath(filePath1)
             .then((status) => {
                 console.log("Got the response");
             });
+            */
     };
 
 

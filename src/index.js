@@ -73,7 +73,7 @@ store.subscribe(() =>
     console.log(store.getState())
 )
 
-store.dispatch(Actions.uploadFile("C:/abc.txt", "abc.txt"))
+//store.dispatch(Actions.uploadFile("C:/abc.txt", "abc.txt"))
 
 
 ReactDOM.render(
