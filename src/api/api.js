@@ -149,7 +149,7 @@ export const deleteFile = (payload) =>
 
 
 export const checkSession = (payload) =>
-    fetch(`${api}/checksession`, {
+    fetch(`${api}/session/checksession`, {
 
         method: 'POST',
         headers: {
@@ -171,7 +171,7 @@ export const checkSession = (payload) =>
 
 
 export const signOut = (payload) =>
-    fetch(`${api}/signout`, {
+    fetch(`${api}/user/signout`, {
 
         method: 'POST',
         headers: {
@@ -181,8 +181,7 @@ export const signOut = (payload) =>
         credentials:'include',
         body: JSON.stringify(payload)
     }).then(res => {
-
-        console.log("Got result")
+        //console.log("Got result")
         //console.log(res.json());
         return res.json();
     }).catch(error => {

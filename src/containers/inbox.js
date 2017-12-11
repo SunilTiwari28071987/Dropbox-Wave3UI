@@ -43,6 +43,7 @@ class Inbox extends Component {
     handleSignOut = (signOutJson) => {
         API.signOut(signOutJson)
             .then((response) => {
+            console.log(JSON.stringify(response))
                 if (response.status === 200) {
                     console.log("Response",response);
                     this.props.signOut();

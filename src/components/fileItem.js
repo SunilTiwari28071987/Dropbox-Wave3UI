@@ -242,7 +242,7 @@ class fileItem extends Component {
 
                         <b className="col-sm-2">
 
-                            <a href={this.props.file.isFolder ? "#" : "http://localhost:5000/download/"+this.props.file.fileName}
+                            <a href={this.props.file.isFolder ? "#" : "http://localhost:8080/file/download/"+this.props.file.fileName}
                                onClick={this.props.file.isFolder ? this.props.onOpenClick : null} target="_self">
 
                                 {this.props.file.fileName}
